@@ -15,8 +15,14 @@ class CarsNews extends HTMLElement{
             cardLeft.setAttribute("class", "card__left")
 
             const autor = document.createElement("span");
-            const linkTitle = document.createElement("h1");
+            autor.textContent = "By " + (this.getAttribute("autor") || "Anonimous ");
+
+            const linkTitle = document.createElement("a");
+            linkTitle.textContent = this.getAttribute("title");
+            linkTitle.href = this.getAttribute("link-url");
+
             const newsContent = document.createElement("p");
+            newsContent.textContent = this.getAttribute("content")
 
             cardLeft.appendChild(autor);
             cardLeft.appendChild(linkTitle);
@@ -26,6 +32,8 @@ class CarsNews extends HTMLElement{
             cardRight.setAttribute("class", "card__right");
 
             const newsImage = document.createElement("img");
+            newsImage.src = this.getAttribute("photo") || "assets/imgs/default-picture.jpg"
+            newsImage.alt = "Foto da noticia";
             cardRight.appendChild(newsImage);
 
         componentRoot.appendChild(cardLeft);
@@ -35,7 +43,45 @@ class CarsNews extends HTMLElement{
     }
 
     styles(){
+        const style = document.createElement("style");
+        style.textContent = `
+        .card{
+            width: 80%;
+            -webkit-box-shadow: 10px 10px 11px -10px rgba(0,0,0,0.75);
+            -moz-box-shadow: 10px 10px 11px -10px rgba(0,0,0,0.75);
+            box-shadow: 10px 10px 11px -10px rgba(0,0,0,0.75);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        
+        .card_left{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 10px;
+        }
+        
+        .card_left > span {
+            font-weight: 400;
+        }
+        
+        .card_left > a{
+            margin-top: 15px;
+            font-size: 25px;
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .card_left > p {
+            color: rgb(70, 70, 70)
+        }
+        
+        `;
 
+
+        return style;
     }
 }
 customElements.define("card-news", CarsNews);
